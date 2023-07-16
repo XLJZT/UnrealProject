@@ -39,5 +39,7 @@ private:
 	void MoveRight(float val);
 	void MouseTurn(float val);
 	void MouseLookup(float val);
+	void MoveUp(float val);
+	
 	void PressSpawnSquare();
 };

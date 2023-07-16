@@ -75,6 +75,11 @@ void ACameraPawn::MouseLookup(float val)
 	const FRotator NewRot = Dir + FRotator(val * MouseVelocity,0,0);
 	RootComponent->SetRelativeRotation(NewRot);
 }
+void ACameraPawn::MoveUp(float val)
+{
+	const FVector NewLoc = RootComponent->GetComponentLocation() + FVector(0,0,val * MoveVelocity);
+	RootComponent->SetRelativeLocation(NewLoc);
+}
 
 //按空格生成正方体
 void ACameraPawn::PressSpawnSquare()

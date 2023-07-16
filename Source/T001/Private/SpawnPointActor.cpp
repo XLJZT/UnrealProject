@@ -8,7 +8,7 @@
 ASpawnPointActor::ASpawnPointActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
 	SetRootComponent(SceneComponent);
@@ -25,7 +25,7 @@ ASpawnPointActor::ASpawnPointActor()
 void ASpawnPointActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	CreatePoint();
 }
 
 // Called every frame
@@ -49,11 +49,9 @@ void ASpawnPointActor::CreatePoint()
 				{
 					const FTransform Transform = FTransform(FRotator::ZeroRotator,InitLoc + FVector(i,j,k)*(SpanLen+PointLen));
 					APointActor* Point = GetWorld()->SpawnActor<APointActor>(PointActor,Transform);
-					//GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Green,Point->GetName());
+					GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Green,Point->GetName());
 				} 
 			}
 		}
-		
 	}
 }
-
