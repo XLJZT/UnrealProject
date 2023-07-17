@@ -37,7 +37,9 @@ protected:
 	//轴上数量
 	UPROPERTY(EditAnywhere,Category="SpawnPoint")
 	int32 X_num = 10;
-	
+	//噪声偏移量
+	UPROPERTY(EditAnywhere,Category="SpawnPoint")
+	float NoiseOffset = 10.0f;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -45,4 +47,6 @@ public:
 	void CreatePoint();
 private:
 	float SquareLen;
+
+	void AddNoiseOffset(FVector &Loc,int32 X,int32 Y,int32 Z,int32 Num);
 };

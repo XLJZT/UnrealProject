@@ -2,6 +2,9 @@
 
 
 #include "SpawnPointActor.h"
+
+#include <SceneExport.h>
+
 #include "Components/BoxComponent.h"
 
 // Sets default values
@@ -47,11 +50,26 @@ void ASpawnPointActor::CreatePoint()
 			{
 				for(int32 k =0;k<X_num;++k)
 				{
-					const FTransform Transform = FTransform(FRotator::ZeroRotator,InitLoc + FVector(i,j,k)*(SpanLen+PointLen));
+					
+					FVector NewLoc = InitLoc + FVector(i,j,k)*(SpanLen+PointLen);
+					AddNoiseOffset(NewLoc,i,j,k,X_num);
+					const FTransform Transform = FTransform(FRotator::ZeroRotator,NewLoc);
 					APointActor* Point = GetWorld()->SpawnActor<APointActor>(PointActor,Transform);
 					GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Green,Point->GetName());
 				} 
 			}
 		}
 	}
+}
+
+void ASpawnPointActor::AddNoiseOffset(FVector &Loc,int32 X,int32 Y,int32 Z,int32 Num)
+{
+	//矩阵最边上的六个面不加噪声
+	if(X==0||Y==0||Z==0) return;
+	if(X==Num-1||Y==Num-1||Z==Num-1) return;
+	//生成三维噪声
+	const FVector NoiseVector = FVector( FMath::FRandRange(-NoiseOffset, NoiseOffset),
+						FMath::FRandRange(-NoiseOffset, NoiseOffset),
+						FMath::FRandRange(-NoiseOffset, NoiseOffset));
+	Loc = Loc + NoiseVector;
 }
