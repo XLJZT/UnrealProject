@@ -28,7 +28,7 @@ ASpawnPointActor::ASpawnPointActor()
 void ASpawnPointActor::BeginPlay()
 {
 	Super::BeginPlay();
-	CreatePoint();
+	//CreatePoint();
 }
 
 // Called every frame
@@ -50,12 +50,12 @@ void ASpawnPointActor::CreatePoint()
 			{
 				for(int32 k =0;k<X_num;++k)
 				{
-					
 					FVector NewLoc = InitLoc + FVector(i,j,k)*(SpanLen+PointLen);
 					AddNoiseOffset(NewLoc,i,j,k,X_num);
 					const FTransform Transform = FTransform(FRotator::ZeroRotator,NewLoc);
 					APointActor* Point = GetWorld()->SpawnActor<APointActor>(PointActor,Transform);
-					GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Green,Point->GetName());
+					//GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Green,Point->GetName());
+					
 				} 
 			}
 		}

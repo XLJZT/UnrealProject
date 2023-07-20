@@ -5,14 +5,14 @@
 #include "SpawnPointActor.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
 ACameraPawn::ACameraPawn()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("StaticMeshComponent"));
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
@@ -84,6 +84,15 @@ void ACameraPawn::MoveUp(float val)
 //按空格生成正方体
 void ACameraPawn::PressSpawnSquare()
 {
-	const FRotator Dir = RootComponent->GetRelativeRotation();
+	TArray<AActor*> SpawnPointArray;
+	if(GetWorld())
+	{
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(),SpawnPointActor,SpawnPointArray);
+	}
+	if(SpawnPointArray.Num()==0) return;
+	ASpawnPointActor* SpawnPoint = Cast<ASpawnPointActor>(SpawnPointArray[0]);
+	if(!SpawnPoint) return;
+	SpawnPoint->CreatePoint();
+	
 }
 

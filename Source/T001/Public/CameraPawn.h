@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SpawnPointActor.h"
 #include "GameFramework/Pawn.h"
 #include "CameraPawn.generated.h"
 
@@ -18,6 +19,9 @@ public:
 	float MoveVelocity;
 	UPROPERTY(EditAnywhere,Category="Variable")
 	float MouseVelocity;
+
+	UPROPERTY(EditAnywhere,Category="Variable")
+	TSubclassOf<ASpawnPointActor> SpawnPointActor;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -28,6 +32,7 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite,Category="Components")
 	class USpringArmComponent* SpringArmComponent;
 	
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -35,11 +40,16 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 private:
+	//是否已经生成
+	bool IsCreate = false;
+	
+	//相机移动
 	void MoveForward(float val);
 	void MoveRight(float val);
 	void MouseTurn(float val);
 	void MouseLookup(float val);
 	void MoveUp(float val);
-	
+
+	//生成
 	void PressSpawnSquare();
 };

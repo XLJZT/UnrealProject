@@ -11,7 +11,7 @@ DECLARE_LOG_CATEGORY_CLASS(LOG_POINT,All,All)
 APointActor::APointActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
 	SetRootComponent(SceneComponent);
@@ -22,7 +22,7 @@ APointActor::APointActor()
 void APointActor::BeginPlay()
 {
 	Super::BeginPlay();
-	GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Green,GetName());
+	//GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Green,GetName());
 }
 
 // Called every frame
